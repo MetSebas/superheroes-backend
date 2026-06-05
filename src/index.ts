@@ -3,6 +3,7 @@ import cors from 'cors';
 import authRoutes from './routes/auth.routes';
 import heroRoutes from './routes/hero.routes';
 
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -11,36 +12,11 @@ app.use(cors()); // Permite que tu frontend acceda al backend
 app.use(express.json());
 
 // Rutas
+app.use('/images', express.static(path.join(__dirname, '../images')));
 app.use('/api/auth', authRoutes);
 app.use('/api/heroes', heroRoutes);
 app.get('/', (req, res) =>{
   res.send("<h1>Bienvenido a mi API con Express y TypeScript</h1>");
-});
-
-const persona = [
-  {
-    "id": 1,
-    "nombre": "Gael"
-  },
-    {
-    "id": 2,
-    "nombre": "Sebastian"
-  },
-  {
-    "id": 3,
-    "nombre": "Ramirez"
-  },
-    {
-    "id": 4,
-    "nombre": "Esparza"
-  }
-];
-
-app.get('/persona/:id', (req, res) =>{
-  const numId = parseInt(req.params.id);
-  const usuario = persona.find(persona => persona.id === numId);
-
-  res.send(`<h1>El usuario solicitado: ${usuario ? usuario.nombre : "No encontrado"}</h1>`);
 });
 
 app.get('/mult/:num1/:num2', (req, res) =>{

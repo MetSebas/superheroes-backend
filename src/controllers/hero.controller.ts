@@ -118,8 +118,9 @@ export const removeFavorite = async (req: AuthRequest, res: Response) => {
 
 // Crear Superhéroe
 export const createHero = async (req: Request, res: Response) => {
-    const { nombre, poder, fortaleza, resistencia, debilidad, imagen_url } = req.body;
-   
+    const { nombre, poder, fortaleza, resistencia, debilidad } = req.body;
+
+    const imagen_url = req.file ? req.file.filename : null;
 
     if (!nombre || !poder || !imagen_url) {
         return res.status(400).json({ error: "Faltan datos obligatorios (nombre, poder, imagen_url)." });
